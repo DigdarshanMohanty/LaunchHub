@@ -1,14 +1,17 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
+// app/layout.tsx
+import '../globals.css';
+import ClientLayoutWrapper from './ClientLayoutWrapper';
 
-function layout({children}: {children: React.ReactNode}) {
+export const metadata = {
+  title: 'LaunchHub',
+  description: 'Connect, Pitch, and Launch Your Startup',
+  icons: {
+    icon: '/favicon.ico',
+  }
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className='font-work-sans'>
-        <Navbar />
-        <div className='w-screen'>{children}</div>
-    </main>
-  )
-
+    <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+  );
 }
-
-export default layout

@@ -18,9 +18,9 @@ const page = async({params}:{params: Promise<{ id: string }>}) => {
     const id = (await params).id; // Extracting the id from params
 
     // Parallel Fetching (Optimizes loading time)
-    const [post,{select: editorPosts}] = await Promise.all([
+    const [post] = await Promise.all([
       client.fetch(STARTUP_BY_ID_QUERY, { id }),
-      client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'editor-picks-new' }),
+      // client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'editor-picks-new' }),
     ])
 
     //Sequential Fetching (Takes longer time)
@@ -33,7 +33,7 @@ const page = async({params}:{params: Promise<{ id: string }>}) => {
     const parsedContent = md.render(post?.pitch || '');
     return (
       <>
-        <section className='pink_container !min-h-[230px]'>
+        <section className='pink_container !min-h-[230px] mt-10'>
           <p className='tag'>
             {formatDate(post?._createdAt)}
           </p>
@@ -41,11 +41,13 @@ const page = async({params}:{params: Promise<{ id: string }>}) => {
           <p className='sub-heading !max-w-5xl'>{post?.description}</p>
         </section>
         <section className='section_container'>
+          <div>
           <img 
             src={post?.image}  
             alt="" 
-            className='w-full h-fit rounded-xl'
+            className='w-1/2 h-fit rounded-xl'
           />
+          </div>
           <div className='space-y-5 mt-10 max-w-4xl mx-auto'>
             <div className='flex-between gap-5'>
               <Link href={`/user/${post.author?._id}`} className="flex gap-2 items-center mb-3">
@@ -79,7 +81,7 @@ const page = async({params}:{params: Promise<{ id: string }>}) => {
           </div>
           <hr className='divider'/>
 
-            {editorPosts?.length > 0 && (
+            {/* {editorPosts?.length > 0 && (
               <div className='max-w-4xl mx-auto'>
                 <p className='text-30-semibold'>Editor Picks</p>
                 <ul className='mt-7 card_grid-sm'>
@@ -88,7 +90,7 @@ const page = async({params}:{params: Promise<{ id: string }>}) => {
                   ))}
                 </ul>
               </div>
-            )}
+            )} */}
           <Suspense fallback={<Skeleton className='view_skeleton'/>}>
             <View id={id}/>
           </Suspense>

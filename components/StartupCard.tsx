@@ -1,4 +1,6 @@
-import { cn, formatDate } from '@/lib/utils'
+'use client'
+
+import { formatDate } from '@/lib/utils'
 import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,83 +9,96 @@ import { Button } from "@/components/ui/button";
 import { Author, Startup } from '@/sanity/types'
 import { Skeleton } from './ui/skeleton'
 
-export type StartupTypeCard = Omit<Startup,"author"> & {
+export type StartupTypeCard = Omit<Startup, "author"> & {
   author?: Author
 }
 
-const StartupCard = ({post}:{post:StartupTypeCard}) => {
-    const {
-        _createdAt,
-        views,
-        title,
-        author,
-        _id,
-        description,
-        image,
-        category
-    } = post;
+const StartupCard = ({ post }: { post: StartupTypeCard }) => {
+  const {
+    _createdAt,
+    views,
+    title,
+    author,
+    _id,
+    description,
+    image,
+    category
+  } = post;
+
   return (
-    <li className='startup-card group'>
-        <div className='flex-between'>
-            <p className='startup_card_date'>
-                {formatDate(_createdAt)}
-            </p>
-            <div className='flex gap-1.5'>
-                <EyeIcon className="size-6 text-primary"/>
-                <span>{views}</span>
-            </div>
+    <li className="rounded-xl border border-indigo-500 bg-[#111827] shadow-lg hover:shadow-indigo-600/30 transition duration-300 overflow-hidden flex flex-col">
+      <Link href={`/startup/${_id}`}>
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-48 object-cover"
+        />
+      </Link>
+
+      <div className="flex flex-col gap-4 p-5 flex-1">
+        {/* Date + Views */}
+        <div className="flex justify-between text-sm text-gray-400">
+          <span>{formatDate(_createdAt)}</span>
+          <span className="flex items-center gap-1">
+            <EyeIcon className="w-4 h-4 text-indigo-500" />
+            {views}
+          </span>
         </div>
-        <div className='flex-between mt-5 gap-5'>
-            <div className='flex-1'>
-                <Link href={`/user/${author?._id}`} className='flex items-center gap-2'>
-                    <p className='text-16-medium line-clamp-1'>{author?.name}</p>
-                </Link>
-                <Link href={`/startup/${author?._id}`} className='text-26-semibold line-clamp-1'>
-                    {title}
-                </Link>
-            </div>
-            <Link href={`/user/${author?._id}`} className='text-26-semibold line-clamp-1'>
-               <Image 
-                    src={author?.image ?? "/default-avatar.png"} 
-                    alt={author?.name ?? "User avatar"} 
-                    width={48} 
-                    height={48} 
-                    className='rounded-full' 
-                />
-            </Link>
+
+        {/* Title + Description */}
+        <div className="flex flex-col gap-2">
+          <Link href={`/startup/${_id}`}>
+            <h2 className="text-xl font-semibold text-indigo-500 line-clamp-2 hover:underline">
+              {title}
+            </h2>
+          </Link>
+          <p className="text-sm text-gray-300 line-clamp-3">
+            {description}
+          </p>
         </div>
-        <Link href={`/startup/${_id}`}>
-            <p className='startup-card_desc'>
-                {description}
-            </p>
-            <img src={image} alt="placeholder" className='startup-card_img' />
-        </Link>
-        <div className='flex-between mt-5 gap-3'>
-            <Link href={`/?query=${category?.toLowerCase()}`}>
-                <p className='text-16-medium'>
-                    {category}
-                </p>
-            </Link>
-            <Button className='startup-card_btn' asChild>
-                <Link href={`/startup/${_id}`}>
-                     Details
-                </Link>
-            </Button>
+
+        {/* Category + Button */}
+        <div className="flex justify-between items-center mt-auto">
+          <Link
+            href={`/?query=${category?.toLowerCase()}`}
+            className="text-xs bg-indigo-900/40 text-indigo-300 font-medium px-3 py-1 rounded-full"
+          >
+            {category}
+          </Link>
+
+          <Button asChild className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-medium">
+            <Link href={`/startup/${_id}`}>Details</Link>
+          </Button>
         </div>
+
+        {/* Author */}
+        <div className="flex items-center gap-3 mt-4">
+          <Link href={`/user/${author?._id}`} className="flex items-center gap-2">
+            <Image
+              src={author?.image || "/default-avatar.png"}
+              alt={author?.name || "User avatar"}
+              width={36}
+              height={36}
+              className="rounded-full object-cover"
+            />
+            <span className="text-sm text-white font-medium">{author?.name}</span>
+          </Link>
+        </div>
+      </div>
     </li>
-    )
-}
+  );
+};
 
-export const StartCardSkeleton = () => {
-    return (
-        <>
-            {[0,1,2,3,4,].map((index: number) => (
-                <li key={cn('skeleton', index)} >
-                    <Skeleton className='startup-card_skeleton' />
-                </li>
-            ))}
-        </>
-    )
-}
+export const StartupCardSkeleton = () => {
+  return (
+    <>
+      {[0, 1, 2, 3, 4].map((index: number) => (
+        <li key={index}>
+          <Skeleton className="h-80 w-full rounded-xl bg-neutral-800" />
+        </li>
+      ))}
+    </>
+  );
+};
 
-export default StartupCard
+export default StartupCard;

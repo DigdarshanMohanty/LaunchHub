@@ -18,7 +18,6 @@ const StartupForm = () => {
   const { toast } = useToast();
   const router = useRouter();
 
-
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
       const formValues = {
@@ -30,9 +29,6 @@ const StartupForm = () => {
       };
 
       await formSchema.parseAsync(formValues);
-
-      console.log(prevState);
-      
 
       const result = await createPitch(prevState, formData, pitch);
 
@@ -82,7 +78,7 @@ const StartupForm = () => {
 
   return (
     <form action={formAction} className="startup-form">
-      <div>
+      <div className="flex flex-col gap-4">
         <label htmlFor="title" className="startup-form_label">
           Title
         </label>
@@ -97,7 +93,7 @@ const StartupForm = () => {
         {errors.title && <p className="startup-form_error">{errors.title}</p>}
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
         <label htmlFor="description" className="startup-form_label">
           Description
         </label>
@@ -114,7 +110,7 @@ const StartupForm = () => {
         )}
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
         <label htmlFor="category" className="startup-form_label">
           Category
         </label>
@@ -131,7 +127,7 @@ const StartupForm = () => {
         )}
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
         <label htmlFor="link" className="startup-form_label">
           Image URL
         </label>
@@ -146,7 +142,7 @@ const StartupForm = () => {
         {errors.link && <p className="startup-form_error">{errors.link}</p>}
       </div>
 
-      <div data-color-mode="light">
+      <div data-color-mode="light" className="flex flex-col gap-4">
         <label htmlFor="pitch" className="startup-form_label">
           Pitch
         </label>
@@ -169,17 +165,23 @@ const StartupForm = () => {
 
         {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
       </div>
-
-      <Button
-        type="submit"
-        className="startup-form_btn text-white"
-        disabled={isPending}
-      >
-        {isPending ? "Submitting..." : "Submit Your Pitch"}
-        <Send className="size-6 ml-2" />
-      </Button>
-    </form>
-  );
+      <div className="flex justify-center mt-6">
+        <Button
+          type="submit"
+          className="fancy-submit-btn bg-indigo-500 hover:bg-indigo-600"
+          data-tooltip="Let's make it big!"
+          disabled={isPending}
+        >
+          <div className="btn-text">
+            {isPending ? "Submitting..." : "Submit Your Pitch"}
+          </div>
+          <div className="btn-icon">
+            <Send className="size-5" />
+          </div>
+        </Button>
+      </div>
+      </form>
+);
 };
 
 export default StartupForm;

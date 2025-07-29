@@ -61,7 +61,7 @@
   }
 
   .pink_container {
-    @apply w-full bg-[#10B981] min-h-[530px] pattern flex justify-center items-center flex-col py-10 px-6;
+    @apply w-full bg-[#6366f1] min-h-[530px] pattern flex justify-center items-center flex-col py-10 px-6;
   }
 
   .tag {
@@ -97,7 +97,7 @@
   }
 
   .profile_card {
-    @apply w-[350px] px-6 pb-6 pt-20 flex flex-col justify-center items-center bg-[#10B981] border-[5px] border-black shadow-100 rounded-[30px] relative z-0 h-fit max-lg:w-full;
+    @apply w-[350px] px-6 pb-6 pt-20 flex flex-col justify-center items-center bg-[#6366f1] border-[5px] border-black shadow-100 rounded-[30px] relative z-0 h-fit max-lg:w-full mt-12;
   }
 
   .profile_title {
@@ -165,22 +165,27 @@
   }
 
   .startup-form {
-    @apply max-w-2xl mx-auto bg-white my-10 space-y-8 px-6;
+    @apply max-w-2xl border-2 border-indigo-500 mx-auto bg-white my-10 space-y-8 px-6 rounded-md p-4;
   }
 
   .startup-form_label {
     @apply font-bold text-[18px] text-black uppercase;
   }
 
-  .startup-form_input {
-    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300 !important;
-  }
+.startup-form_input,
+.startup-form_textarea {
+  @apply bg-[#e8e8e8] rounded-xl border-none p-4 focus:outline-none transition duration-300;
 
-  .startup-form_textarea {
-    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300 !important;
-  }
+  /* Neumorphism-style box-shadow using raw CSS */
+  box-shadow: 20px 20px 60px #c5c5c5, -20px -20px 60px #ffffff;
+}
 
-  .startup-form_error {
+.startup-form_input:focus,
+.startup-form_textarea:focus {
+  box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
+}
+
+.startup-form_error {
     @apply text-red-500 mt-2 ml-5;
   }
 
@@ -188,15 +193,26 @@
     @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 !important;
   }
 
-  .startup-form_btn {
-    @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
+.startup-form_btn {
+  @apply bg-[#e8e8e8] text-black rounded-full font-semibold px-6 py-3 transition duration-300 cursor-pointer select-none;
+    box-shadow: 8px 8px 16px #c5c5c5, -8px -8px 16px #ffffff;
+    border: none;
   }
+  
+                                                                                                                                .startup-form_btn:hover {
+                                                                                                                                  box-shadow: inset 6px 6px 12px #c5c5c5, inset -6px -6px 12px #ffffff;
+                                                                                                                                  transform: scale(0.98);
+                                                                                                                                }
+                                                                
+                                                                                                                                .startup-form_btn:active {
+                                                                                                                                  box-shadow: inset 4px 4px 8px #c5c5c5, inset -4px -4px 8px #ffffff;
+                                                                                                                                  transform: scale(0.95);
+                                                                                                                                }
+.view-container {
+  @apply flex justify-end items-center mt-5 fixed bottom-3 right-3;
+}
 
-  .view-container {
-    @apply flex justify-end items-center mt-5 fixed bottom-3 right-3;
-  }
-
-  .view-text {
+.view-text {
     @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-lg capitalize;
   }
 
@@ -221,5 +237,110 @@
 
   .w-md-editor-toolbar {
     padding: 10px !important;
+  }
+}
+@layer components {
+  .form-container {
+    @apply space-y-6 p-6 max-w-3xl mx-auto bg-white shadow-md rounded-lg;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .form-input {
+    @apply w-full border border-gray-300 rounded-md px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500;
+  }
+
+  .form-textarea {
+    @apply w-full border border-gray-300 rounded-md px-4 py-2 text-gray-800 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500;
+  }
+
+  .form-error {
+    @apply text-red-500 text-sm mt-1;
+  }
+
+  .form-button {
+    @apply mt-4 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-md flex items-center justify-center transition-all duration-200;
+  }
+
+  .form-button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .form-md-editor {
+    @apply border border-gray-300 rounded-lg mt-2;
+  }
+
+  .form-heading {
+    @apply text-xl font-semibold text-indigo-600 mb-4;
+  }
+
+  .create-section-hero {
+    @apply w-full min-h-[230px] bg-pink-100 flex items-center justify-center;
+  }
+
+  .create-section-heading {
+    @apply text-3xl font-bold text-indigo-600 text-center;
+  }
+}
+
+@layer components {
+  .fancy-submit-btn {
+    @apply relative bg-neutral-800 text-white rounded-lg w-[160px] h-[48px] font-semibold overflow-hidden transition-all duration-300;
+  }
+
+  .fancy-submit-btn .btn-text,
+  .fancy-submit-btn .btn-icon {
+    @apply absolute w-full h-full flex items-center justify-center transition-all duration-500;
+  }
+
+  .fancy-submit-btn .btn-text {
+    top: 0;
+  }
+
+  .fancy-submit-btn .btn-icon {
+    top: 100%;
+  }
+
+  .fancy-submit-btn:hover .btn-text {
+    top: -100%;
+  }
+
+  .fancy-submit-btn:hover .btn-icon {
+    top: 0;
+  }
+
+  .fancy-submit-btn::before {
+    content: attr(data-tooltip);
+    @apply absolute w-[140px] h-[35px] bg-gray-700 text-white text-sm text-center rounded-md leading-[35px] z-10;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .fancy-submit-btn::after {
+    content: '';
+    @apply absolute border-[10px] border-transparent;
+    border-top-color: #555;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .fancy-submit-btn:hover::before,
+  .fancy-submit-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .fancy-submit-btn:disabled {
+    @apply opacity-60 cursor-not-allowed;
   }
 }
